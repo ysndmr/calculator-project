@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles/styles.css">
+</head>
+
+<body class="dark">
+  <div class="bg"></div>
+  <!-- Wrapper for the entire content -->
+  <div class="wrapper">
+    <div class="button-wrapper">
+      <!-- Theme Toggle Section -->
+      <div class="theme-toggle">
+        <input type="checkbox" id="theme-switch" />
+        <label for="theme-switch" id="theme-label">
+          Theme
+          <svg id="light-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="dark-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 0111.21 3 7 7 0 0021 12.79z"></path>
+          </svg>
+        </label>
+      </div>
+      <div>
+        <!-- ReadMe Button -->
+        <div id="readme-button">
+          <span>Read Me</span>
+        </div>
+      </div>
+    </div>
+    <!-- Calculator Section -->
+    <main id="calculator">
+      <!-- Display Section -->
+      <section id="display">
+        <input type="text" id="current-operand" value="0" disabled>
+      </section>
+      <!-- Buttons Section -->
+      <section id="buttons">
+        <button class="operation clear" data-value="C">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle">
+            <text x="5" y="19" font-family="Arial" font-size="16" fill="currentColor">C</text>
+          </svg>
+        </button>
+        <button class="operation" data-value="/">
+          <svg xmlns="http://www.w3.org/2000/svg" class="group" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-divide">
+            <circle cx="12" cy="6" r="2"></circle>
+            <circle cx="12" cy="18" r="2"></circle>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+        <button class="operation" data-value="*">
+          <svg xmlns="http://www.w3.org/2000/svg" class="group" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <button class="operation" data-value="del">
+          <svg xmlns="http://www.w3.org/2000/svg" class="group" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete">
+            <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+            <line x1="18" y1="9" x2="12" y2="15"></line>
+            <line x1="12" y1="9" x2="18" y2="15"></line>
+          </svg>
+        </button>
+        <button data-value="7">7</button>
+        <button data-value="8">8</button>
+        <button data-value="9">9</button>
+        <button class="operation" data-value="-">
+          <svg xmlns="http://www.w3.org/2000/svg" class="group" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+        <button data-value="1">1</button>
+        <button data-value="2">2</button>
+        <button data-value="3">3</button>
+        <button class="operation" data-value="+">
+          <svg xmlns="http://www.w3.org/2000/svg" class="group" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
+        <button data-value="4">4</button>
+        <button data-value="5">5</button>
+        <button data-value="6">6</button>
+        <button class="operation" data-value="%">
+          <svg xmlns="http://www.w3.org/2000/svg" class="group" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="19" y1="5" x2="5" y2="19"></line>
+            <circle cx="6.5" cy="6.5" r="2.5"></circle>
+            <circle cx="17.5" cy="17.5" r="2.5"></circle>
+          </svg>
+        </button>
+        <button data-value="0" class="dot">0</button>
+        <button data-value=".">.</button>
+        <button class="equal" data-value="=">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" class="feather feather-equals">
+            <line x1="5" y1="9" x2="19" y2="9"></line>
+            <line x1="5" y1="15" x2="19" y2="15"></line>
+          </svg>
+        </button>
+        <!-- Trigonometric Button Section -->
+        <button class="trig" data-value="sin">sin</button>
+        <button class="trig" data-value="cos">cos</button>
+        <button class="trig" data-value="tan">tan</button>
+        <!-- Memory Button Section -->
+        <button class="memory" data-value="M+">M+</button>
+        <button class="memory" data-value="MR">MR</button>
+        <button class="memory" data-value="MC">MC </button>
+      </section>
+    </main>
+    <!-- Sidebar for README -->
+    <div id="readme-sidebar">
+      <div id="readme-content">
+        <h1>Calculator Features</h1>
+        <p>The calculator is a simple and intuitive web-based tool that provides basic arithmetic operations and
+          additional functionalities. It is designed to be user-friendly and versatile, catering to various calculation
+          needs. Here’s a detailed guide on how to use it and what each function does:
+        </p>
+        <h2>How to Use the Calculator</h2>
+        <h3>Basic Arithmetic Operations:</h3>
+        <ul>
+          <li><strong>Entering Numbers:</strong> Click on the number buttons (0-9) to enter numbers. The numbers will
+            appear in the display section at the top.
+          </li>
+          <li><strong>Addition (+):</strong> Click the `+` button to add two numbers. For example, to calculate 5 + 3,
+            click `5`, `+`, `3`, and then `=`.
+          </li>
+          <li><strong>Subtraction (-):</strong> Click the `-` button to subtract one number from another. For example,
+            to calculate 7 - 2, click `7`, `-`, `2`, and then `=`.
+          </li>
+          <li><strong>Multiplication (*):</strong> Click the `*` button to multiply two numbers. For example, to
+            calculate 4 * 3, click `4`, `*`, `3`, and then `=`.
+          </li>
+          <li><strong>Division (/):</strong> Click the `/` button to divide one number by another. For example, to
+            calculate 10 / 2, click `10`, `/`, `2`, and then `=`.
+          </li>
+          <li><strong>Equals (=):</strong> Click the `=` button to get the result of the arithmetic operation.</li>
+        </ul>
+        <h3>Memory Functions:</h3>
+        <ul>
+          <li><strong>M+ (Memory Add):</strong> Adds the current value to the memory. This function is useful for
+            cumulative calculations. For example, if you want to add multiple numbers together, you can use M+ to store
+            the sum temporarily.
+          </li>
+          <li><strong>MR (Memory Recall):</strong> Recalls the value stored in the memory. This allows you to use the
+            stored value in further calculations.
+          </li>
+          <li><strong>MC (Memory Clear):</strong> Clears the memory. This function is used to reset the memory value to
+            zero.
+          </li>
+        </ul>
+        <h3>Special Functions:</h3>
+        <ul>
+          <li><strong>C (Clear):</strong> Clears the current input, resetting the display to 0. This is useful if you
+            make a mistake or want to start a new calculation.
+          </li>
+          <li><strong>del (Delete):</strong> Deletes the last digit of the current input. This is useful for correcting
+            input errors without clearing the entire number.
+          </li>
+          <li><strong>% (Percentage):</strong> Converts the current value to a percentage. For example, if you enter 50
+            and press %, the display will show 0.5 (which is 50% of 1).
+          </li>
+          <li>
+            <strong>sin/cos/tan (Trigonometric Functions):</strong> Applies the respective trigonometric function to
+            the current value. These functions are useful for scientific calculations:
+            <ul>
+              <li><strong>sin:</strong> Calculates the sine of an angle (in radians).</li>
+              <li><strong>cos:</strong> Calculates the cosine of an angle (in radians).</li>
+              <li><strong>tan:</strong> Calculates the tangent of an angle (in radians).</li>
+            </ul>
+          </li>
+        </ul>
+        <h3>Theme Toggle:</h3>
+        <p>Use the theme switch to toggle between light and dark modes. This allows you to customize the appearance of
+          the calculator according to your preference. The selected theme is saved in your browser's local storage, so
+          your preference will be retained even if you reload the page or close and reopen the browser.
+        </p>
+        <h2>Additional Features</h2>
+        <ul>
+          <li><strong>Responsive Design:</strong> The calculator is designed to be fully responsive, ensuring it works
+            seamlessly on different devices, including desktops, tablets, and mobile phones.
+          </li>
+          <li><strong>User-Friendly Interface:</strong> The layout is intuitive, with clearly labeled buttons and a
+            clean design that makes it easy to use for people of all ages.
+          </li>
+          <li><strong>Error Handling:</strong> The calculator includes basic error handling to manage invalid inputs or
+            operations, ensuring a smooth user experience.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+  <!-- External JavaScript Libraries -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Custom JavaScript Files -->
+  <script src="src/calculator.js"></script>
+  <script src="src/theme-toggle.js"></script>
+</body>
+
+</html>
