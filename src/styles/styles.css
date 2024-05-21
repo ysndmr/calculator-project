@@ -1,0 +1,330 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--background-color);
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  transition: background 0.3s;
+  overflow: hidden;
+}
+
+.bg {
+  opacity: 0.015;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://png.pngtree.com/background/20211215/original/pngtree-educational-mathematical-formulas-on-white-background-picture-image_1457809.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.button-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+#calculator {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  background: var(--calculator-background);
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#display input {
+  width: 100%;
+  text-align: right;
+  font-size: 2em;
+  border: none;
+  padding: 10px 10px 20px 10px;
+  box-sizing: border-box;
+  background: transparent;
+  color: var(--display-color);
+}
+
+#buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 1px;
+}
+
+button {
+  padding: 25px 20px;
+  font-size: 1.5em;
+  border: none;
+  background: var(--button-background);
+  color: var(--button-color);
+  cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke-width: 2px;
+}
+
+button svg.group {
+  stroke: var(--operation-color);
+}
+
+button:hover {
+  background: var(--button-hover);
+}
+
+button:disabled {
+  background: var(--button-background);
+  color: var(--button-hover);
+  cursor: not-allowed;
+}
+
+button:disabled svg.group {
+  stroke: var(--button-hover);
+}
+
+.operation {
+  background: var(--operation-background);
+}
+
+.trig {
+  background: var(--memory-background);
+}
+
+.clear {
+  background: var(--clear-background);
+}
+
+.clear:hover {
+  background: red;
+}
+
+.equal {
+  background: var(--equal-background);
+  color: var(--display-color);
+  grid-row: span 3;
+}
+
+.memory {
+  background: var(--memory-background);
+}
+
+.dot {
+  grid-column: span 2;
+}
+
+.theme-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--display-color);
+}
+
+#theme-switch {
+  display: none;
+}
+
+#theme-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+#light-icon,
+#dark-icon {
+  width: 24px;
+  height: 24px;
+}
+
+#theme-switch:checked+#theme-label #light-icon {
+  display: none;
+}
+
+#theme-switch:not(:checked)+#theme-label #dark-icon {
+  display: none;
+}
+
+
+/* Styles for ReadMe button and sidebar */
+
+#readme-button {
+  position: relative;
+  padding: 10px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--display-color);
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  transition: all 0.5s;
+
+}
+
+#readme-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s;
+}
+
+#readme-button:hover::before {
+  opacity: 0;
+  transform: scale(0.5, 0.5);
+}
+
+#readme-button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  opacity: 0;
+  transition: all 0.3s;
+  border: 1px solid var(--button-hover);
+  transform: scale(1.2, 1.2);
+}
+
+#readme-button:hover::after {
+  opacity: 1;
+  transform: scale(1, 1);
+}
+
+
+#readme-sidebar {
+  position: fixed;
+  right: -100%;
+  top: 0;
+  width: 600px;
+  height: 100%;
+  background-color: var(--background-color);
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: right 0.3s ease;
+  overflow-y: auto;
+  padding: 50px;
+  font-family: "Roboto", sans-serif;
+  color: var(--button-color);
+  z-index: 1000;
+  line-height: 180%;
+}
+
+#readme-sidebar.active {
+  right: 0;
+}
+
+#readme-content {
+  font-size: 16px;
+}
+
+#readme-content h1,
+#readme-content h2,
+#readme-content h3 {
+  margin-top: 0;
+}
+
+#readme-content h1 {
+  font-size: 25px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #171823;
+  padding-bottom: 10px;
+}
+
+#readme-content h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#readme-content h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#readme-content ul {
+  padding-left: 30px;
+  margin: 40px 0;
+}
+
+#readme-content ul li {
+  margin-bottom: 10px;
+}
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  #readme-sidebar {
+    width: 100%;
+    top: 100px;
+    padding: 20px
+  }
+
+  #readme-button {
+    right: 50%;
+    transform: translateX(50%);
+  }
+}
+
+/* Theme Variables */
+:root {
+  /* --background-color: #2c2f34; */
+  --background-color: radial-gradient(circle, rgb(53 55 81) 0%, rgb(0 0 0) 100%);
+
+  --calculator-background: #252531;
+  --display-background: #212232;
+  --display-color: #ffffff;
+  --button-background: #2d2f3f;
+  --button-color: #ffffff;
+  --button-hover: #575757;
+  --operation-background: #33354d;
+  --operation-color: #cda249;
+  --equal-background: #ffbb02;
+  --trig-background: #313459;
+  --memory-background: #434452;
+  --clear-background: #1e1f33;
+}
+
+.light {
+  --background-color: radial-gradient(circle, rgb(190 190 190) 0%, rgb(66 66 66) 100%);
+  --calculator-background: #ffffff;
+  --display-background: #ffffff;
+  --display-color: #000000;
+  --button-background: #f2f2f2;
+  --button-color: #000000;
+  --button-hover: #e0e0e0;
+  --operation-background: #d1d1d1;
+  --operation-color: #a95e01;
+  --equal-background: #ffbb02;
+  --trig-background: #b0c4de;
+  --memory-background: #dcdcdc;
+  --clear-background: #f1f1f1;
+}
