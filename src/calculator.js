@@ -1,71 +1,130 @@
 $(document).ready(function () {
-    // ThemeManager class to handle theme switching functionality
-    class ThemeManager {
+    class Calculator {
         constructor() {
-            this.themeSwitch = $('#theme-switch');
-            this.currentTheme = localStorage.getItem('theme') || 'light';
-            this.init();
+            this.display = $('#current-operand');
+            this.deleteButton = $('button[data-value="del"]');
+            this.currentOperand = '0';
+            this.memory = 0;
+
+            this.initialize();
         }
 
-        // Initialize theme manager
-        init() {
-            this.applyCurrentTheme();
-            this.themeSwitch.prop('checked', this.currentTheme === 'dark');
-            this.themeSwitch.on('change', () => this.toggleTheme());
+        initialize() {
+            this.attachEventHandlers();
+            this.updateDisplay();
+            this.toggleDeleteButton();
         }
 
-        // Apply the current theme to the body
-        applyCurrentTheme() {
-            $('body').addClass(this.currentTheme);
+        attachEventHandlers() {
+            $('#buttons').on('click', 'button', (event) => this.handleButtonClick(event));
         }
 
-        // Toggle between light and dark themes
-        toggleTheme() {
-            if (this.themeSwitch.is(':checked')) {
-                $('body').removeClass('light').addClass('dark');
-                localStorage.setItem('theme', 'dark');
+        handleButtonClick(event) {
+            const button = $(event.target).closest('button');
+            const value = button.data('value');
+
+            switch (value) {
+                case 'C':
+                    this.clear();
+                    break;
+                case 'M+':
+                    this.addToMemory();
+                    break;
+                case 'MR':
+                    this.recallMemory();
+                    break;
+                case 'MC':
+                    this.clearMemory();
+                    break;
+                case 'del':
+                    this.deleteLastDigit();
+                    break;
+                case '%':
+                    this.calculatePercentage();
+                    break;
+                case '=':
+                    this.evaluate();
+                    break;
+                case 'sin':
+                case 'cos':
+                case 'tan':
+                    this.applyTrigonometricFunction(value);
+                    break;
+                default:
+                    this.appendDigit(value);
+            }
+
+            this.updateDisplay();
+            this.toggleDeleteButton();
+        }
+
+        clear() {
+            this.currentOperand = '0';
+        }
+
+        addToMemory() {
+            this.memory += parseFloat(this.currentOperand) || 0;
+        }
+
+        recallMemory() {
+            this.currentOperand = this.memory.toString();
+        }
+
+        clearMemory() {
+            this.memory = 0;
+            this.clear();
+        }
+
+        deleteLastDigit() {
+            if (this.currentOperand.length > 1) {
+                this.currentOperand = this.currentOperand.slice(0, -1);
             } else {
-                $('body').removeClass('dark').addClass('light');
-                localStorage.setItem('theme', 'light');
+                this.clear();
             }
+        }
+
+        calculatePercentage() {
+            this.currentOperand = (parseFloat(this.currentOperand) / 100).toString();
+        }
+
+        evaluate() {
+            try {
+                this.currentOperand = this.evaluateExpression(this.currentOperand).toString();
+            } catch {
+                this.currentOperand = 'Error';
+            }
+        }
+
+        evaluateExpression(expression) {
+            return Function(`'use strict'; return (${expression})`)();
+        }
+
+        applyTrigonometricFunction(func) {
+            const value = parseFloat(this.currentOperand);
+            const trigFunctions = {
+                'sin': Math.sin,
+                'cos': Math.cos,
+                'tan': Math.tan
+            };
+            this.currentOperand = trigFunctions[func](value).toString();
+        }
+
+        appendDigit(digit) {
+            if (this.currentOperand === '0') {
+                this.currentOperand = digit.toString();
+            } else {
+                this.currentOperand += digit.toString();
+            }
+        }
+
+        updateDisplay() {
+            this.display.val(this.currentOperand);
+        }
+
+        toggleDeleteButton() {
+            this.deleteButton.prop('disabled', !(this.currentOperand.length > 1 || this.currentOperand !== '0'));
         }
     }
 
-    // SidebarManager class to handle the README sidebar
-    class SidebarManager {
-        constructor() {
-            this.readmeButton = $('#readme-button');
-            this.readmeSidebar = $('#readme-sidebar');
-            this.closeButton = $('#close-button');
-            this.body = $('body');
-
-            this.init();
-        }
-
-        // Initialize sidebar manager
-        init() {
-            this.readmeButton.on('click', () => this.toggleSidebar());
-            this.closeButton.on('click', () => this.closeSidebar());
-            this.closeSidebar();
-        }
-
-        // Toggle the sidebar visibility
-        toggleSidebar() {
-            this.readmeSidebar.toggleClass('active');
-            this.body.toggleClass('active');
-        }
-
-        closeSidebar() {
-            if (this.body.hasClass('active')) {
-                this.body.removeClass('active');
-                this.readmeSidebar.removeClass('active');
-            }
-        }
-    }
-
-
-    // Instantiate the ThemeManager class
-    new ThemeManager();
-    new SidebarManager();
-
+    new Calculator();
 });
