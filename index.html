@@ -5,11 +5,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calculator</title>
+
   <link rel="stylesheet" href="src/styles/styles.css">
+
 </head>
 
 <body class="dark">
   <div class="bg"></div>
+  <div id="overlay"></div>
   <!-- Wrapper for the entire content -->
   <div class="wrapper">
     <div class="button-wrapper">
@@ -131,6 +134,13 @@
     </main>
     <!-- Sidebar for README -->
     <div id="readme-sidebar">
+      <div id="close-button-wrapper">
+        <svg id="close-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+          <line x1="18" y1="6" x2="6" y2="18" stroke-width="2" />
+          <line x1="6" y1="6" x2="18" y2="18" stroke-width="2" />
+        </svg>
+      </div>
+
       <div id="readme-content">
         <h1>Calculator Features</h1>
         <p>The calculator is a simple and intuitive web-based tool that provides basic arithmetic operations and
