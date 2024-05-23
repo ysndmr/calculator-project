@@ -3,6 +3,7 @@ $(document).ready(function () {
         constructor() {
             this.display = $('#current-operand');
             this.deleteButton = $('button[data-value="del"]');
+            this.operationButtons = this.getOperationButtons();
             this.currentOperand = '0';
             this.memory = 0;
 
@@ -12,7 +13,11 @@ $(document).ready(function () {
         initialize() {
             this.attachEventHandlers();
             this.updateDisplay();
-            this.toggleDeleteButton();
+            this.toggleButtons();
+        }
+
+        getOperationButtons() {
+            return $('button[data-value="+"], button[data-value="-"], button[data-value="/"], button[data-value="*"], button[data-value="%"], button[data-value="="], button[data-value="sin"], button[data-value="cos"], button[data-value="tan"], button[data-value="M+"], button[data-value="MR"], button[data-value="MC"]');
         }
 
         attachEventHandlers() {
@@ -21,41 +26,44 @@ $(document).ready(function () {
 
         handleButtonClick(event) {
             const button = $(event.target).closest('button');
-            const value = button.data('value');
+            const value = this.sanitizeInput(button.data('value'));
 
-            switch (value) {
-                case 'C':
-                    this.clear();
-                    break;
-                case 'M+':
-                    this.addToMemory();
-                    break;
-                case 'MR':
-                    this.recallMemory();
-                    break;
-                case 'MC':
-                    this.clearMemory();
-                    break;
-                case 'del':
-                    this.deleteLastDigit();
-                    break;
-                case '%':
-                    this.calculatePercentage();
-                    break;
-                case '=':
-                    this.evaluate();
-                    break;
-                case 'sin':
-                case 'cos':
-                case 'tan':
-                    this.applyTrigonometricFunction(value);
-                    break;
-                default:
-                    this.appendDigit(value);
+            if (this.isDigit(value)) {
+                this.appendDigit(value);
+            } else {
+                this.handleOperation(value);
             }
 
             this.updateDisplay();
-            this.toggleDeleteButton();
+            this.toggleButtons();
+        }
+
+        sanitizeInput(value) {
+            // Simple input sanitization example
+            return String(value).replace(/[^\w.]/gi, '');
+        }
+
+        isDigit(value) {
+            return !isNaN(value) || value === '.';
+        }
+
+        handleOperation(value) {
+            const operations = {
+                'C': this.clear,
+                'M+': this.addToMemory,
+                'MR': this.recallMemory,
+                'MC': this.clearMemory,
+                'del': this.deleteLastDigit,
+                '%': this.calculatePercentage,
+                '=': this.evaluate,
+                'sin': this.applyTrigonometricFunction,
+                'cos': this.applyTrigonometricFunction,
+                'tan': this.applyTrigonometricFunction
+            };
+
+            if (operations[value]) {
+                operations[value].call(this, value);
+            }
         }
 
         clear() {
@@ -110,7 +118,7 @@ $(document).ready(function () {
         }
 
         appendDigit(digit) {
-            if (this.currentOperand === '0') {
+            if (this.currentOperand === '0' && digit !== '.') {
                 this.currentOperand = digit.toString();
             } else {
                 this.currentOperand += digit.toString();
@@ -121,7 +129,9 @@ $(document).ready(function () {
             this.display.val(this.currentOperand);
         }
 
-        toggleDeleteButton() {
+        toggleButtons() {
+            const isOperandEmpty = this.currentOperand === '0';
+            this.operationButtons.prop('disabled', isOperandEmpty);
             this.deleteButton.prop('disabled', !(this.currentOperand.length > 1 || this.currentOperand !== '0'));
         }
     }
